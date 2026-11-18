@@ -143,3 +143,20 @@ specifiers rewritten to `./three.core.min.js`.
   dossier.json 1,427,909 bytes (< 1.5 MiB cap); Game block: Source 10 files
   (90,950 bytes), Vendored 2 (three.*.min.js, 2,133,707 bytes), Assets none.
 - Repo: Wahyudifarid/makefun-dustline (new GitHub repo, created after opening).
+
+## Submitted to best-game-01 — 2026-11-18 ~10:42 KL
+- Entry SUBMITTED and ACCEPTED (HTTP 202): submission
+  01a1ec88-24a5-75c7-b342-aff3aedc6b14, "DUSTLINE — Tactical FPS".
+- Submitted commit: b088613df198759ba60df92d0522a24db41cd9ac (this commit is
+  the entry; later commits do not change it).
+- Repo: https://github.com/Wahyudifarid/makefun-dustline (public, created
+  2026-11-18T02:28:12Z, after opening). Payout wallet
+  A12AGpCiqaYBCh76ayHYYopYMwXvHhtFhQ9J5ddFs74u.
+- Local check before submit: 13 passed, 0 failed (thinking_reproduces
+  97.8% authored, 7/7 usage records priced, all 404 transcript timestamps
+  in window). Server status: all checks pass; outcome not decided.
+- Bundle: ~/workspace/makefun/transcripts-dustline.tar.gz (410,986 bytes,
+  sha256 388128e0364d5b5d733393174af657d8fad961a1c86c6d5ee1da12a5867c01a4),
+  4 build sessions (f45aeb21, a0522026, ec8960ba, 7d952baf) + 7 usage rows.
+- Entries close 2026-11-18T18:00Z; result due 2026-12-03T06:10Z.
+- Claim code: given to Farid in chat (do NOT store it anywhere).
