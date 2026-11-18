@@ -99,3 +99,47 @@ specifiers rewritten to `./three.core.min.js`.
    against the real repo and confirm deterministic output.
 3. Coordinator: GitHub repo creation + push (only after API lists the
    competition), bundle/check/submit (not infra's job).
+
+## Coordinator integration — 2026-11-16 ~17:56 UTC
+- GAME verified playable: 4 real screenshots taken with the harness against the
+  vendored three.js (01 buy menu, 02 firefight w/ HUD+bots, 03 planted charge
+  Relay Alpha 32s, 04 ROUND WON banner). All within gate limits (<=256 KiB,
+  long side <=1280, short side >=480). Visually checked by coordinator.
+  Note: harness reported "__DUSTLINE_SHOT_READY not seen in 15s" on all 4 and
+  captured anyway — captures are correct, but the ready flag may be misnamed
+  or late; harmless for now, re-check if re-shooting.
+- Committed f8954d7 (game + real screenshots). 5 local commits total, no remote.
+- main.ts determinism on REAL repo: two runs diff-identical; dossier.json
+  1,427,414 bytes (< 1.5 MiB cap), output total 4,651,974 bytes (< 64 MiB).
+  BUT dossier was built with the DRAFT vendor buildDossier, not the kit's.
+- BLOCKER: make.fun API still 404s on threejs-fps-01 at ~17:56 UTC (~56 min
+  after opening). Kit tarball still 71-byte error JSON. Poll loop restarted
+  17:53 UTC (pid 8744) and running; it downloads + unpacks the kit on sight.
+- REMAINING (in order): (1) kit lands -> verify three.js byte-identity vs kit,
+  replace if different; copy kit vendor/makefun-threejs.ts UNCHANGED; revise
+  main.ts to the real buildDossier signature; re-test determinism. (2) bundle
+  --dry-run early to confirm session discovery; then bundle with
+  --prompt-file ~/workspace/makefun/fps01-prompt.txt --prompt-origin scheduled
+  --prompt-via "scheduled cron job makefun-fps-01-build-start" --mcp none
+  (+ --redact for Farid's full name if present; --muse-usage <usage file>).
+  (3) makefun check --kit <kit> --repo <repo> --transcripts transcripts.tar.gz
+  must pass. (4) Create GitHub repo Wahyudifarid/makefun-threejs-fps-01 ONLY
+  after API lists the competition; push; submit with --title "DUSTLINE —
+  Tactical FPS" (max 5/day, 10 total). (5) Report receipt + provisional rate.
+- Known cosmetic nits: shot 4 kill-feed line still says "ROUND 1" while score
+  shows round 6; headless SwiftShader runs sim at ~15-25% real-time (not a
+  game bug); window.__dustline debug handle exposed; bot balance untested at
+  human skill level.
+
+## Adaptation to best-game-01 — 2026-11-18 ~10:25 KL
+- threejs-fps-01 kit never landed (KIT_TIMEOUT); entry moved to best-game-01
+  (opens 2026-11-15T18:00Z, closes 2026-11-18T18:00Z) in this copy of the repo.
+- vendor/makefun-threejs.ts (draft) REMOVED; vendor/makefun-game.ts copied
+  UNCHANGED from the best-game-01 kit (sha256
+  dc67187521b24025ff952f8c231485a6eb92d6d71d29edd2a08154ffb4376129).
+- main.ts revised to the real buildDossier signature (caps text_max_bytes,
+  screenshots, game_max_files, game_max_bytes, game_path_max_bytes).
+- main.ts determinism re-verified on the real repo: two runs diff-identical,
+  dossier.json 1,427,909 bytes (< 1.5 MiB cap); Game block: Source 10 files
+  (90,950 bytes), Vendored 2 (three.*.min.js, 2,133,707 bytes), Assets none.
+- Repo: Wahyudifarid/makefun-dustline (new GitHub repo, created after opening).

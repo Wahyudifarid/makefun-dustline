@@ -1,4 +1,4 @@
-// DUSTLINE — threejs-fps-01 entry program (Node 22, standard library only).
+// DUSTLINE — best-game-01 entry program (Node 22, standard library only).
 //
 // Copies this repository's game/ and screenshots/ to the output directory
 // and writes output/dossier.json with buildDossier from the vendored
@@ -9,24 +9,28 @@
 // Outside the grader MAKEFUN_OUTPUT_DIR stands in for /output; when it is
 // unset the program writes to /output. Two runs write byte-identical output:
 // files are copied in sorted order, symlinks are refused, and the dossier
-// carries no timestamps. DRAFT: written before the kit landed, from the
-// rules description; revise the buildDossier call once the kit's
-// vendor/makefun-threejs.ts is in place.
+// carries no timestamps. Adapted 2026-11-18 from the threejs-fps-01 draft:
+// the draft vendor/makefun-threejs.ts is replaced by the best-game-01 kit's
+// vendor/makefun-game.ts (copied unchanged), and the caps follow the
+// best-game-01 gate.
 
 import { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildDossier } from './vendor/makefun-threejs.ts';
+import { buildDossier } from './vendor/makefun-game.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-// The gate's caps for this bounty (fps01-rules.md): text 160 KiB, at most 4
-// screenshots of at most 256 KiB each, game/ at most 993 entries / 48 MiB.
+// The gate's caps for this bounty (best-game-01): text 160 KiB, at most 4
+// screenshots of at most 256 KiB each, game/ at most 993 entries / 48 MiB,
+// paths under game/ at most 1000 bytes.
 const CAPS = {
   text_max_bytes: 163_840,
   screenshots: { max: 4, max_bytes: 262_144 },
-  game: { max_files: 993, max_bytes: 50_331_648 },
+  game_max_files: 993,
+  game_max_bytes: 50_331_648,
+  game_path_max_bytes: 1000,
 };
 
 /** Copy one directory tree into `to`, in sorted order, refusing symlinks. */
